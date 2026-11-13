@@ -1,0 +1,91 @@
+
+
+C:/Users/824751/Desktop/Lab_3/video_PLL.vhd
+
+Sep 18 04PM:13:30>: Error in CNX file format.
+
+Error messages are listed in file
+C:/Users/824751/Desktop/Lab_3/video_PLL.cnxerr.
+
+Can't create the custom megafunction variation file(s)
+
+C:/Users/824751/Desktop/Lab_3/video_PLL.vhd
+
+Sep 18 04PM:29:44>: Error in CNX file format.
+
+Error messages are listed in file
+C:/Users/824751/Desktop/Lab_3/video_PLL.cnxerr.
+
+Can't create the custom megafunction variation file(s)
+
+C:/Users/824751/Desktop/Lab_3/video_PLL.vhd
+
+Sep 18 04PM:29:48>: Error in CNX file format.
+
+Error messages are listed in file
+C:/Users/824751/Desktop/Lab_3/video_PLL.cnxerr.
+
+Can't create the custom megafunction variation file(s)
+
+C:/Users/824751/Desktop/Lab_3/video_PLL.vhd
+
+Sep 18 04PM:33:28>: Error in CNX file format.
+
+Error messages are listed in file
+C:/Users/824751/Desktop/Lab_3/video_PLL.cnxerr.
+
+Can't create the custom megafunction variation file(s)
+
+C:/Users/824751/Desktop/Lab_3/video_PLL.vhd
+
+Sep 25 02PM:22:58>: Error in CNX file format.
+
+Error messages are listed in file
+C:/Users/824751/Desktop/Lab_3/video_PLL.cnxerr.
+
+Can't create the custom megafunction variation file(s)
+
+C:/Users/824751/Desktop/Lab_3/video_PLL.vhd
+
+Sep 25 02PM:23:05>: Error in CNX file format.
+
+Error messages are listed in file
+C:/Users/824751/Desktop/Lab_3/video_PLL.cnxerr.
+
+Can't create the custom megafunction variation file(s)
+
+C:/Users/824751/Desktop/Lab_3/video_PLL.vhd
+
+Sep 25 02PM:24:21>: Error in CNX file format.
+
+Error messages are listed in file
+C:/Users/824751/Desktop/Lab_3/video_PLL.cnxerr.
+
+Can't create the custom megafunction variation file(s)
+
+C:/Users/824751/Desktop/Lab_3/video_PLL.vhd
+
+Oct 02 01PM:55:56>: Error in CNX file format.
+
+Error messages are listed in file
+C:/Users/824751/Desktop/Lab_3/video_PLL.cnxerr.
+
+Can't create the custom megafunction variation file(s)
+
+C:/Users/824751/Desktop/Lab_3/Video_PLL.vhd
+
+Oct 02 02PM:00:00>: Error in CNX file format.
+
+Error messages are listed in file
+C:/Users/824751/Desktop/Lab_3/Video_PLL.cnxerr.
+
+Can't create the custom megafunction variation file(s)
+
+C:/Users/824751/Desktop/Lab_3/Video_PLL.vhd
+
+Oct 02 02PM:01:06>: Error in CNX file format.
+
+Error messages are listed in file
+C:/Users/824751/Desktop/Lab_3/Video_PLL.cnxerr.
+
+Can't create the custom megafunction variation file(s)

@@ -1,0 +1,202 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
+
+-- Desenha o tabuleiro do Jogo da Velha em 640x480.
+--
+-- board[17:0] = 9 casas, 2 bits por casa:
+--   "00" = vazia
+--   "01" = jogador 1 (X)
+--   "10" = jogador 2 (O)
+--
+-- A casa 0 é o canto superior esquerdo e a casa 8
+-- é o canto inferior direito.
+--
+-- Os sinais red, green e blue são de 1 bit porque
+-- o VGA_SYNC fornecido pelo professor recebe RGB de 1 bit.
+
+ENTITY vga_display IS
+    PORT(
+        board       : IN  STD_LOGIC_VECTOR(17 DOWNTO 0);
+        pixel_row   : IN  STD_LOGIC_VECTOR(9 DOWNTO 0);
+        pixel_column: IN  STD_LOGIC_VECTOR(9 DOWNTO 0);
+        video_on    : IN  STD_LOGIC;
+
+        red         : OUT STD_LOGIC;
+        green       : OUT STD_LOGIC;
+        blue        : OUT STD_LOGIC
+    );
+END vga_display;
+
+ARCHITECTURE rtl OF vga_display IS
+
+    SIGNAL x : INTEGER RANGE 0 TO 1023;
+    SIGNAL y : INTEGER RANGE 0 TO 1023;
+
+    SIGNAL cell_x : INTEGER RANGE 0 TO 2;
+    SIGNAL cell_y : INTEGER RANGE 0 TO 2;
+    SIGNAL cell   : INTEGER RANGE 0 TO 8;
+
+    SIGNAL local_x : INTEGER RANGE 0 TO 199;
+    SIGNAL local_y : INTEGER RANGE 0 TO 199;
+
+    SIGNAL cell_value : STD_LOGIC_VECTOR(1 DOWNTO 0);
+
+    SIGNAL draw_grid : STD_LOGIC;
+    SIGNAL draw_x    : STD_LOGIC;
+    SIGNAL draw_o    : STD_LOGIC;
+
+BEGIN
+
+    x <= TO_INTEGER(UNSIGNED(pixel_column));
+    y <= TO_INTEGER(UNSIGNED(pixel_row));
+
+    ----------------------------------------------------------------
+    -- Tabuleiro:
+    --
+    -- posição: x = 170 .. 469
+    --           y =  90 .. 389
+    --
+    -- Cada casa tem aproximadamente 100 x 100 pixels.
+    ----------------------------------------------------------------
+
+    PROCESS(x, y, board, video_on)
+        VARIABLE cx : INTEGER;
+        VARIABLE cy : INTEGER;
+        VARIABLE lx : INTEGER;
+        VARIABLE ly : INTEGER;
+        VARIABLE pos : INTEGER;
+
+        VARIABLE grid_v : STD_LOGIC;
+        VARIABLE grid_h : STD_LOGIC;
+        VARIABLE xv     : STD_LOGIC;
+        VARIABLE ov     : STD_LOGIC;
+        VARIABLE cv     : STD_LOGIC_VECTOR(1 DOWNTO 0);
+
+        VARIABLE dx : INTEGER;
+        VARIABLE dy : INTEGER;
+        VARIABLE dist2 : INTEGER;
+    BEGIN
+        grid_v := '0';
+        grid_h := '0';
+        xv     := '0';
+        ov     := '0';
+
+        cx := 0;
+        cy := 0;
+        lx := 0;
+        ly := 0;
+        pos := 0;
+        cv := "00";
+
+        ------------------------------------------------------------
+        -- Linhas do tabuleiro
+        ------------------------------------------------------------
+        IF (x >= 170 AND x <= 469 AND y >= 90 AND y <= 389) THEN
+
+            -- duas linhas verticais
+            IF (x >= 268 AND x <= 271) OR
+               (x >= 368 AND x <= 371) THEN
+                grid_v := '1';
+            END IF;
+
+            -- duas linhas horizontais
+            IF (y >= 188 AND y <= 191) OR
+               (y >= 288 AND y <= 291) THEN
+                grid_h := '1';
+            END IF;
+
+            --------------------------------------------------------
+            -- Identifica a casa
+            --------------------------------------------------------
+            IF x < 270 THEN
+                cx := 0;
+                lx := x - 170;
+            ELSIF x < 370 THEN
+                cx := 1;
+                lx := x - 270;
+            ELSE
+                cx := 2;
+                lx := x - 370;
+            END IF;
+
+            IF y < 190 THEN
+                cy := 0;
+                ly := y - 90;
+            ELSIF y < 290 THEN
+                cy := 1;
+                ly := y - 190;
+            ELSE
+                cy := 2;
+                ly := y - 290;
+            END IF;
+
+            pos := cy * 3 + cx;
+
+            cv := board(pos*2+1 DOWNTO pos*2);
+
+            --------------------------------------------------------
+            -- Jogador 1: X
+            --------------------------------------------------------
+            IF cv = "01" THEN
+
+                -- diagonal \
+                IF ABS(lx - ly) <= 3 THEN
+                    xv := '1';
+                END IF;
+
+                -- diagonal /
+                IF ABS(lx - (99 - ly)) <= 3 THEN
+                    xv := '1';
+                END IF;
+
+            --------------------------------------------------------
+            -- Jogador 2: O
+            --------------------------------------------------------
+            ELSIF cv = "10" THEN
+
+                -- círculo aproximado: raio ~35 pixels
+                dx := lx - 50;
+                dy := ly - 50;
+                dist2 := dx*dx + dy*dy;
+
+                -- faixa do contorno do círculo
+                IF (dist2 >= 30*30) AND (dist2 <= 37*37) THEN
+                    ov := '1';
+                END IF;
+
+            END IF;
+        END IF;
+
+        ------------------------------------------------------------
+        -- Saída RGB
+        --
+        -- fundo = preto
+        -- linhas = branco
+        -- X = vermelho
+        -- O = azul
+        ------------------------------------------------------------
+        red   <= '0';
+        green <= '0';
+        blue  <= '0';
+
+        IF video_on = '1' THEN
+
+            IF grid_v = '1' OR grid_h = '1' THEN
+                red   <= '1';
+                green <= '1';
+                blue  <= '1';
+
+            ELSIF xv = '1' THEN
+                red   <= '1';
+
+            ELSIF ov = '1' THEN
+                blue  <= '1';
+
+            END IF;
+
+        END IF;
+
+    END PROCESS;
+
+END rtl;
